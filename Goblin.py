@@ -1,5 +1,5 @@
 import Enemy
-import pygame # type: ignore
+import pygame
 
 class Goblin(Enemy.Enemy):
     def __init__(self, x, y, platform):
@@ -19,10 +19,8 @@ class Goblin(Enemy.Enemy):
         self.direction = 1
 
     def update(self):
-            # Mover horizontalmente
             self.rect.x += self.speed * self.direction
 
-            # Lógica de patrulla: Detectar bordes de la platform
             if self.rect.right > self.platform.right:
                 self.direction = -1
             if self.rect.left < self.platform.left:

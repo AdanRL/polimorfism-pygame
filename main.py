@@ -11,11 +11,12 @@ def main():
 	pygame.mixer.music.load("assets/audio/background_music.mp3")
 	pygame.mixer.music.play(-1)
 	pygame.mixer.music.set_volume(0.5)
-	screen = pygame.display.set_mode((constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT))
 
+	screen = pygame.display.set_mode((constants.WINDOW_WIDTH, constants.WINDOW_HEIGHT))
 	pygame.display.set_caption("Tarea de Pygamed ")
 	clock = pygame.time.Clock()
 	player = Personaje.Personaje(constants.PLAYER_WIDTH, constants.PLAYER_HEIGHT)
+
 	move_top = False
 	move_bottom = False
 	move_left = False
@@ -81,6 +82,7 @@ def main():
 			player.move(0, player.speed)
 
 		for event in pygame.event.get():
+
 			if event.type == pygame.QUIT:
 				run = False
 

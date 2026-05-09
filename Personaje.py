@@ -1,4 +1,4 @@
-import pygame # type: ignore
+import pygame
 import constants
 import os
 
@@ -40,7 +40,7 @@ class Personaje():
 			self.update_time = pygame.time.get_ticks()
 		if self.frame_index >= len(self.animations[self.state]):
 			if self.is_attacking:
-				self.is_attacking = False # El ataque ha terminado
+				self.is_attacking = False
 			self.frame_index = 0
 			
 
@@ -71,7 +71,7 @@ class Personaje():
 		self.rect.center = self.shape.center
 
 	def get_attack_rect(self):
-		# Creamos un rectángulo de ataque un poco más largo que el personaje
+		# cuadrado de colisiones
 		if self.flip: # Atacando a la izquierda
 			return pygame.Rect(self.shape.x - 40, self.shape.y, 40, self.shape.height)
 		else: # Atacando a la derecha
@@ -105,17 +105,15 @@ class Personaje():
 		# Comprobar colisión con cada plataforma
 		for platform in platforms:
 			if self.shape.colliderect(platform):
-				# Solo colisionamos si estamos cayendo (vel_y > 0)
 				if self.vel_y > 0:
 					self.shape.bottom = platform.top
 					self.vel_y = 0
 					self.is_jumping = False
 
 	def jump(self):
-		if not self.is_jumping: # Solo salta si no está ya en el aire
+		if not self.is_jumping: 
 			self.vel_y = self.jump_force
 			self.is_jumping = True
-			# Opcional: cambiar estado para animación de salto
 			self.state = "jump" 
 			self.frame_index = 0
 
