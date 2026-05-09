@@ -1,11 +1,8 @@
 import pygame # type: ignore
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y, imagePath):
+    def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.image.load(imagePath).convert_alpha()
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
 
         # STATS
         self.ca = 0

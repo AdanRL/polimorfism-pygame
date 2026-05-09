@@ -1,5 +1,5 @@
 import Enemy
-import pygame # type: ignore
+import pygame
 
 class RedDragon(Enemy.Enemy):
     def __init__(self, x, y):
@@ -9,7 +9,7 @@ class RedDragon(Enemy.Enemy):
         
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
-        self.speed = 4
+        self.speed = 5
 
         # STATS
         self.ca = 18

@@ -8,7 +8,7 @@ class Zombi(Enemy.Enemy):
         self.image = pygame.transform.scale(self.image, (x, y))
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
-        self.speed = 4
+        self.speed = 1
 
         # STATS
         self.ca = 18

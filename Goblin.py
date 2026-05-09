@@ -2,30 +2,35 @@ import Enemy
 import pygame # type: ignore
 
 class Goblin(Enemy.Enemy):
-    def __init__(self, x, y):
-        super().__init__(x, y, "assets/goblin.png")
+    def __init__(self, x, y, platform):
+        super().__init__(x, y)
 
-        self.image = pygame.transform.scale(self.image, (x, y))
-        
+        self.image = pygame.Surface((40, 40))
+        self.image.fill((0, 255, 0)) # Verde
+
+        # Posicionamiento
         self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
-        self.speed = 4
+        self.rect.bottom = platform.top 
+        self.rect.x = x
 
-        # STATS
-        self.ca = 18
-        self.iniciative = 0
-        self.pg = 256
-        self.speed = 4
-        self.strength = 27
-        self.agility = 10
-        self.intelligence = 16
-        self.wisdom = 13
-        self.charisma = 15
-        self.constitution = 20
+        # Movimiento
+        self.platform = platform 
+        self.speed = 2
+        self.direction = 1
 
     def update(self):
-        print("¡El goblin corre por el campo!")
+            # Mover horizontalmente
+            self.rect.x += self.speed * self.direction
+
+            # Lógica de patrulla: Detectar bordes de la platform
+            if self.rect.right > self.platform.right:
+                self.direction = -1
+            if self.rect.left < self.platform.left:
+                self.direction = 1
     
     def attack(self):
         print("¡El goblin ataca con su cimitarra!")
+
+    def draw(self, interface):
+        interface.blit(self.image, self.rect)
 
