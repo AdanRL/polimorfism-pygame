@@ -24,9 +24,10 @@ def main():
 	run = True
 
 	scene_data= [
-		(0, 500, 800, 20), 
-		(200, 380, 150, 20), 
-		(450, 280, 150, 20)  
+		(0, 500, 1600, 20),
+		(200, 380, 150, 20),
+		(450, 280, 150, 20),
+		(550, 180, 150, 20)
 	]
 
 	level1 = Scene.Scene(scene_data)
@@ -35,14 +36,20 @@ def main():
 
 	enemies = pygame.sprite.Group()
 	enemies.add(goblin1)
+
+	scroll = [0, 0]
 	
 	while run:
 		screen.fill(constants.BG_COLOR)
-		level1.draw(screen)
 		clock.tick(constants.FPS)
-		player.draw(screen)
-		player.update()
 		player.apply_gravity(level1.get_platform())
+
+		scroll[0] += (player.shape.x - scroll[0] - constants.WINDOW_WIDTH // 2) / 15
+		scroll[1] += (player.shape.y - scroll[1] - constants.WINDOW_HEIGHT // 2) / 15
+		scroll_int = [int(scroll[0]), int(scroll[1])]
+		level1.draw(screen, scroll_int)
+		player.draw(screen, scroll)
+		player.update()
 
 		enemies.update()
 
@@ -55,7 +62,7 @@ def main():
 					goblin.kill()
 
 		for enemy in enemies:
-			enemy.draw(screen)
+			enemy.draw(screen, scroll_int)
 
 		if player.is_attacking:
 			new_state = "attack"

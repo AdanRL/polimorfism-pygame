@@ -25,8 +25,6 @@ class Personaje():
 		self.shape = pygame.Rect(0,0, constants.PLAYER_WIDTH, constants.PLAYER_HEIGHT)
 		self.rect = self.image.get_rect()
 
-
-
 	def update(self):
 
 		if self.state == "idle":
@@ -42,19 +40,9 @@ class Personaje():
 			if self.is_attacking:
 				self.is_attacking = False
 			self.frame_index = 0
-			
 
 	def move(self, dx, dy):
 		self.shape.x += dx
-		
-		# --- Límite Izquierdo ---
-		if self.shape.left < 0:
-			self.shape.left = 0
-			
-		# --- Límite Derecho ---
-		if self.shape.right > constants.WINDOW_WIDTH:
-			self.shape.right = constants.WINDOW_WIDTH
-
 		self.shape.y += dy
 		
 		# --- Límite Superior ---
@@ -71,7 +59,7 @@ class Personaje():
 		self.rect.center = self.shape.center
 
 	def get_attack_rect(self):
-		# cuadrado de colisiones
+		# cuadrado de colisionesgit 
 		if self.flip: # Atacando a la izquierda
 			return pygame.Rect(self.shape.x - 40, self.shape.y, 40, self.shape.height)
 		else: # Atacando a la derecha
@@ -96,7 +84,6 @@ class Personaje():
 					img = pygame.transform.scale(img, (64, 64))
 					self.animations[animation].append(img)
 
-	
 	def apply_gravity(self, platforms):
 		# Aplicar gravedad
 		self.vel_y += self.gravity
@@ -117,7 +104,7 @@ class Personaje():
 			self.state = "jump" 
 			self.frame_index = 0
 
-	def draw(self, interface):
+	def draw(self, interface, scroll):
 			image_flip = pygame.transform.flip(self.image, self.flip , flip_y= False )
-			interface.blit(image_flip, self.shape)
+			interface.blit(image_flip, (self.shape.x - scroll[0], self.shape.y - scroll[1]))
 			# pygame.draw.rect(interface, constants.PLAYER_COLOR, self.shape)

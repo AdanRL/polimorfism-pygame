@@ -3,7 +3,7 @@ import pygame # type: ignore
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-
+        
         # STATS
         self.ca = 0
         self.iniciative = 0
