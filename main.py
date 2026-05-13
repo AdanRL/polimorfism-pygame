@@ -4,6 +4,7 @@ import pygame
 import Personaje
 import Scene
 import Goblin
+import Warrior
 	
 def main():
 	pygame.init()
@@ -33,9 +34,12 @@ def main():
 	level1 = Scene.Scene(scene_data)
 	goblin_platform = level1.get_platform()[1]
 	goblin1 = Goblin.Goblin(300, 0, goblin_platform)
+	warrior1 = Warrior.Warrior(1200, 400)
 
 	enemies = pygame.sprite.Group()
+	weapons = pygame.sprite.Group()
 	enemies.add(goblin1)
+	enemies.add(warrior1)
 
 	scroll = [0, 0]
 	
@@ -55,14 +59,25 @@ def main():
 
 		if player.is_attacking:
 			rect_ataque = player.get_attack_rect()
-			pygame.draw.rect(screen, (255, 0, 0), rect_ataque, 2)
+			pygame.draw.rect(screen, (255, 0, 0), 
+                     (rect_ataque.x - scroll_int[0], 
+                      rect_ataque.y - scroll_int[1], 
+                      rect_ataque.width, rect_ataque.height), 2)
 
 			for goblin in enemies:
 				if rect_ataque.colliderect(goblin.rect):
 					goblin.kill()
 
 		for enemy in enemies:
-			enemy.draw(screen, scroll_int)
+			enemy.draw(screen, scroll)
+			if isinstance(enemy, Warrior.Warrior):
+						enemy.ai(player.shape)
+			elif isinstance(enemy, Goblin.Goblin):
+						enemy.throw(weapons)
+		weapons.update()
+
+		for weapon in weapons:
+			weapon.draw(screen, scroll_int)
 
 		if player.is_attacking:
 			new_state = "attack"

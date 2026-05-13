@@ -1,5 +1,6 @@
 import Enemy
 import pygame
+import weapon
 import os
 
 class Goblin(Enemy.Enemy):
@@ -24,6 +25,8 @@ class Goblin(Enemy.Enemy):
         self.platform = platform 
         self.speed = 2
         self.direction = 1
+        self.ultimo_disparo = pygame.time.get_ticks()
+        self.cooldown_disparo = 2000 # Dispara cada 2 segundos
 
     def update(self):
             cooldown_animation = 100
@@ -63,3 +66,10 @@ class Goblin(Enemy.Enemy):
                     img = pygame.transform.scale(img, (64, 64))
                     self.animations[animation].append(img)
 
+    def throw(self, grupo_proyectiles):
+            tiempo_actual = pygame.time.get_ticks()
+            if tiempo_actual - self.ultimo_disparo > self.cooldown_disparo:
+                # Crear proyectil y añadirlo al grupo
+                nuevo_proyectil = weapon.Weapon(self.rect.centerx, self.rect.centery, self.direction)
+                grupo_proyectiles.add(nuevo_proyectil)
+                self.ultimo_disparo = tiempo_actual
